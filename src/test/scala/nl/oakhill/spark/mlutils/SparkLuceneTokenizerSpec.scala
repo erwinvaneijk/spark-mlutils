@@ -21,6 +21,8 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class SparkLuceneTokenizerSpec extends FlatSpec with Matchers with SparkMatchers with DataFrameSuiteBase {
 
+  protected override implicit def enableHiveSupport : Boolean = false
+
   private val inputColumnName = "contents"
   private val outputColumnName = "tokenized"
 
