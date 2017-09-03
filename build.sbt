@@ -58,6 +58,7 @@ resolvers ++= Seq(
   "Cloudera Repository" at "https://repository.cloudera.com/artifactory/cloudera-repos/",
   "Apache HBase" at "https://repository.apache.org/content/repositories/releases",
   "Twitter Maven Repo" at "http://maven.twttr.com/",
+  "Spring Plugins" at "http://repo.spring.io/plugins-release",
   "scala-tools" at "https://oss.sonatype.org/content/groups/scala-tools",
   "sonatype-releases" at "https://oss.sonatype.org/content/repositories/releases/",
   "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
