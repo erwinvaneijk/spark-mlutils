@@ -2,6 +2,8 @@
 
 name := "mlutils"
 
+organization := "nl.oakhill.spark"
+
 version := "0.1"
 
 scalaVersion := "2.11.11"
@@ -49,6 +51,23 @@ libraryDependencies ++= Seq(
     exclude("org.scala-lang.modules", "scala-xml_2.11")
 )
 
+pomIncludeRepository := { x => false }
+
+resolvers ++= Seq(
+  "JBoss Repository" at "http://repository.jboss.org/nexus/content/repositories/releases/",
+  "Cloudera Repository" at "https://repository.cloudera.com/artifactory/cloudera-repos/",
+  "Apache HBase" at "https://repository.apache.org/content/repositories/releases",
+  "Twitter Maven Repo" at "http://maven.twttr.com/",
+  "scala-tools" at "https://oss.sonatype.org/content/groups/scala-tools",
+  "sonatype-releases" at "https://oss.sonatype.org/content/repositories/releases/",
+  "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
+  "Second Typesafe repo" at "http://repo.typesafe.com/typesafe/maven-releases/",
+  "Mesosphere Public Repository" at "http://downloads.mesosphere.io/maven",
+  Resolver.sonatypeRepo("public")
+)
+
+publishMavenStyle := true
+
 // publish settings
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
@@ -62,16 +81,16 @@ licenses := Seq("Apache License 2.0" -> url("http://www.apache.org/licenses/LICE
 
 homepage := Some(url("https://github.com/erwinvaneijk/spark-mlutils"))
 
-pomExtra := (
-  <scm>
-    <url>git@github.com:erwinvaneijk/spark-mlutils.git</url>
-    <connection>scm:git@github.com:erwinvaneijk/spark-mlutils.git</connection>
-  </scm>
-    <developers>
-      <developer>
-        <id>erwinvaneijk</id>
-        <name>Erwin van Eijk</name>
-        <email>erwinvaneijk@gmail.com</email>
-      </developer>
-    </developers>
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/erwinvaneijk/spark-mlutils"),
+      "scm:git@github.com:erwinvaneijk/spark-mlutils.git"
+    )
   )
+
+developers := List(
+  Developer(id="erwinvaneijk",
+            name="Erwin van Eijk",
+            email="erwinvaneijk@gmail.com",
+            url=url("https://gibhub.com/erwinvaneijk"))
+)
