@@ -4,7 +4,7 @@ name := "mlutils"
 
 organization := "nl.oakhill.spark"
 
-version := "0.1.2"
+version := "0.1.3"
 
 scalaVersion := "2.11.11"
 
