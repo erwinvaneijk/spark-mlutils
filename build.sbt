@@ -92,6 +92,6 @@ scmInfo := Some(
 developers := List(
   Developer(id="erwinvaneijk",
             name="Erwin van Eijk",
-            email="erwinvaneijk@gmail.com",
+            email="erwin.vaneijk@gmail.com",
             url=url("https://gibhub.com/erwinvaneijk"))
 )
