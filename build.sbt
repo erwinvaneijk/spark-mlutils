@@ -69,6 +69,8 @@ resolvers ++= Seq(
 
 publishMavenStyle := true
 
+useGpg := true
+
 // publish settings
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
@@ -77,6 +79,8 @@ publishTo := {
   else
     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
+
+publishArtifact in Test := false
 
 licenses := Seq("Apache License 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 
