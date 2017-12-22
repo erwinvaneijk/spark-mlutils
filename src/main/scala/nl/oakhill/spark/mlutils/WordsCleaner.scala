@@ -26,7 +26,7 @@ import org.apache.spark.sql.types.{DataType, StringType}
   *
   * @author Erwin van Eijk
   */
-class WordCleaner(override val uid: String) extends UnaryTransformer[String, String, WordCleaner] with DefaultParamsWritable {
+class WordsCleaner(override val uid: String) extends UnaryTransformer[Array[String], Array[String], WordsCleaner] with DefaultParamsWritable {
 
   def this() = this(Identifiable.randomUID("wc"))
 
@@ -34,15 +34,17 @@ class WordCleaner(override val uid: String) extends UnaryTransformer[String, Str
 
   private def noDigits = "[\\d]".r
 
-  protected override def createTransformFunc: (String) => String = wordCleanerFunction
+  protected override def createTransformFunc: (Array[String]) => Array[String] = wordCleanerFunction
 
-  def wordCleanerFunction(str: String): String = {
-    val word = wholeWords.replaceAllIn(str, "")
-    val noDigit = noDigits.replaceAllIn(word, "")
-    noDigit
+  def wordCleanerFunction(a: Array[String]): Array[String] = {
+    a.map { str =>
+      val word = wholeWords.replaceAllIn(str, "")
+      val noDigit = noDigits.replaceAllIn(word, "")
+      noDigit
+    }
   }
 
-  override def copy(extra: ParamMap): WordCleaner = defaultCopy(extra)
+  override def copy(extra: ParamMap): WordsCleaner = defaultCopy(extra)
 
   override protected def outputDataType: DataType = StringType
 }

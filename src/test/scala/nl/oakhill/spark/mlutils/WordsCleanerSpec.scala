@@ -19,30 +19,28 @@ package nl.oakhill.spark.mlutils
 import com.holdenkarau.spark.testing.SharedSparkContext
 import org.scalatest.{FlatSpec, Matchers}
 
-class WordCleanerSpec extends FlatSpec with SharedSparkContext with Matchers with SparkMatchers {
+class WordsCleanerSpec extends FlatSpec with SharedSparkContext with Matchers with SparkMatchers {
   private def testColumnName = "words"
 
-  "A WordCleaner" should "have an input specification" in {
-    val wordCleaner = new WordCleaner()
-    wordCleaner.setInputCol(testColumnName)
-    wordCleaner.getInputCol should be (testColumnName)
-    wordCleaner.getOutputCol should not be testColumnName
+  "A WordsCleaner" should "have an input specification" in {
+    val wordsCleaner = new WordsCleaner()
+    wordsCleaner.setInputCol(testColumnName)
+    wordsCleaner.getInputCol should be (testColumnName)
+    wordsCleaner.getOutputCol should not be testColumnName
   }
 
   it should "have an output specification" in {
-    val wordCleaner = new WordCleaner()
-    wordCleaner.setOutputCol(testColumnName)
-    wordCleaner.getOutputCol should be (testColumnName)
-    an [NoSuchElementException] should be thrownBy wordCleaner.getInputCol
+    val wordsCleaner = new WordsCleaner()
+    wordsCleaner.setOutputCol(testColumnName)
+    wordsCleaner.getOutputCol should be (testColumnName)
+    an [NoSuchElementException] should be thrownBy wordsCleaner.getInputCol
   }
 
   it should "clean the words" in {
     val values = Array[String]("This"," is"," a", "t3st")
     val expected = Array[String]("This","is","a", "tst")
-    val wordCleaner = new WordCleaner()
-    values.zip(expected).map{ case (v, e) =>
-      val transformed = wordCleaner.wordCleanerFunction(v)
-      transformed should be (e)
-    }
+    val wordsCleaner = new WordsCleaner()
+    val transformed = wordsCleaner.wordCleanerFunction(values)
+    transformed should be (expected)
   }
 }
