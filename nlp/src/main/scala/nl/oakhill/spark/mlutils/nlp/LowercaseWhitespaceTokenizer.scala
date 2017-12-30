@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nl.oakhill.spark.mlutils
+package nl.oakhill.spark.mlutils.nlp
 
 import org.apache.lucene.analysis.{Analyzer, LowerCaseFilter}
 import org.apache.lucene.analysis.Analyzer.TokenStreamComponents
@@ -23,7 +23,7 @@ import org.apache.lucene.analysis.core.WhitespaceTokenizer
 /**
   * Do cool stuff with lowercase whitespaces and stuff.
   *
-  * @author Erwin van EIjk
+  * @author Erwin van Eijk
   */
 class LowercaseWhitespaceTokenizer extends Analyzer {
   override def createComponents(fieldName: String): TokenStreamComponents = {

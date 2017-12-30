@@ -1,20 +1,19 @@
+import Dependencies._
 
-
-name := "mlutils"
-
-organization := "nl.oakhill.spark"
-
-version := "0.1.3"
-
-scalaVersion := "2.11.11"
-
-fork in Test := true
-
-javaOptions ++= Seq("-Xms512M", "-Xmx2048M", "-XX:MaxPermSize=2048M", "-XX:+CMSClassUnloadingEnabled")
-
-parallelExecution in Test := false
-
-scalastyleConfig := baseDirectory.value / "project" / "scalastyle_config.xml"
+lazy val commonSettings = Seq(
+  name := "sparkutils",
+  organization := "nl.oakhill.spark",
+  version := "0.1.4-SNAPSHOT",
+  scalaVersion := "2.11.11",
+  javaOptions ++= Seq("-Xms512M",
+      "-Xmx2048M",
+      "-XX:MaxPermSize=2048M",
+      "-XX:+CMSClassUnloadingEnabled"),
+  fork in Test := true,
+  parallelExecution in Test := false,
+  scalastyleConfig := baseDirectory.value / "project" / "scalastyle_config.xml",
+  (scalastyleConfig in Test) := baseDirectory.value / "project" / "scalastyle_config.xml"
+)
 
 lazy val compileScalastyle = taskKey[Unit]("compileScalastyle")
 
@@ -28,32 +27,24 @@ testScalastyle := scalastyle.in(Test).toTask("").value
 
 (test in Test) := ((test in Test) dependsOn testScalastyle).value
 
-(scalastyleConfig in Test) := baseDirectory.value / "project" / "scalastyle_config.xml"
+lazy val core = (project in file("core"))
+  .settings(commonSettings,
+      libraryDependencies ++= coreDependencies
+      )
 
-resolvers += "Collective Media Bintray" at "https://dl.bintray.com/collectivemedia/releases"
+lazy val nlp = (project in file("nlp"))
+  .settings(commonSettings,
+      libraryDependencies ++= luceneDependencies)
+  .dependsOn(core % "compile->compile;test->test")
 
-libraryDependencies ++= Seq(
-  "com.jsuereth" %% "scala-arm" % "1.4",
-  "com.typesafe.scala-logging" %% "scala-logging" % "3.4.0",
-  "org.apache.spark" %% "spark-mllib" % "2.2.0",
-  "org.apache.spark" %% "spark-sql" % "2.2.0",
-  "com.github.nscala-time" %% "nscala-time" % "2.12.0",
-  "org.apache.lucene" % "lucene-analyzers-common" % "6.6.0",
-  "com.holdenkarau" %% "spark-testing-base" % "2.2.0_0.7.2" % "test",
-  "org.apache.hive" % "hive-exec" % "2.3.0" % "test",
-  "org.pentaho" % "pentaho-aggdesigner-algorithm" % "5.1.5-jhyde" % "test",
-  "org.apache.logging.log4j" % "log4j-core" % "2.9.0" % "test",
-  "org.apache.logging.log4j" % "log4j-jul" % "2.9.0" % "test",
-  "commons-net" % "commons-net" % "3.1",
-  "org.scalactic" %% "scalactic" % "3.0.0" % "test",
-  "org.scalatest" %% "scalatest" % "3.0.0" % "test"
-    exclude("org.scala-lang", "scala-reflect")
-    exclude("org.scala-lang.modules", "scala-xml_2.11")
-)
+lazy val root = (project in file("."))
+   .settings(commonSettings)
+   .aggregate(core, nlp)
 
 pomIncludeRepository := { x => false }
 
 resolvers ++= Seq(
+  "Collective Media Bintray" at "https://dl.bintray.com/collectivemedia/releases",
   "JBoss Repository" at "http://repository.jboss.org/nexus/content/repositories/releases/",
   "Cloudera Repository" at "https://repository.cloudera.com/artifactory/cloudera-repos/",
   "Apache HBase" at "https://repository.apache.org/content/repositories/releases",
@@ -84,12 +75,12 @@ publishArtifact in Test := false
 
 licenses := Seq("Apache License 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 
-homepage := Some(url("https://github.com/erwinvaneijk/spark-mlutils"))
+homepage := Some(url("https://github.com/erwinvaneijk/sparkutils"))
 
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/erwinvaneijk/spark-mlutils"),
-      "scm:git@github.com:erwinvaneijk/spark-mlutils.git"
+    url("https://github.com/erwinvaneijk/sparkutils"),
+      "scm:git@github.com:erwinvaneijk/sparkutils.git"
     )
   )
 

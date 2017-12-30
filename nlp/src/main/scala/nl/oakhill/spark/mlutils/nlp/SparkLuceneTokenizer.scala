@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nl.oakhill.spark.mlutils
+package nl.oakhill.spark.mlutils.nlp
 
 import java.io.StringReader
 

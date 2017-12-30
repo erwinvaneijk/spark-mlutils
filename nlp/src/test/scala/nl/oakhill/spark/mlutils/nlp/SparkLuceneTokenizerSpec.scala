@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package nl.oakhill.spark.mlutils
+package nl.oakhill.spark.mlutils.nlp
 
 import com.holdenkarau.spark.testing.DataFrameSuiteBase
 import org.scalatest.{FlatSpec, Matchers}
+import nl.oakhill.spark.mlutils.SparkMatchers
 
 class SparkLuceneTokenizerSpec extends FlatSpec with Matchers with SparkMatchers with DataFrameSuiteBase {
 
