@@ -14,9 +14,11 @@ object Dependencies {
   val scalaLogging =
     "com.typesafe.scala-logging" %% "scala-logging" % scalaLoggingVersion
   val sparkSql =
-    "org.apache.spark" %% "spark-sql" % sparkVersion
+    ("org.apache.spark" %% "spark-sql" % sparkVersion)
+    .exclude("commons-net", "commons-net")
   val sparkMlLib =
-    "org.apache.spark" %% "spark-mllib" % sparkVersion
+    ("org.apache.spark" %% "spark-mllib" % sparkVersion)
+    .exclude("commons-net", "commons-net")
   val scalaTic =
     "org.scalactic" %% "scalactic" % scalaTestVersion
   val scalaTest =

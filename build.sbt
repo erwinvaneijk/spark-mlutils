@@ -6,13 +6,28 @@ lazy val commonSettings = Seq(
   version := "0.1.4-SNAPSHOT",
   scalaVersion := "2.11.11",
   javaOptions ++= Seq("-Xms512M",
-      "-Xmx2048M",
-      "-XX:MaxPermSize=2048M",
-      "-XX:+CMSClassUnloadingEnabled"),
+    "-Xmx2048M",
+    "-XX:MaxPermSize=2048M",
+    "-XX:+CMSClassUnloadingEnabled"),
   fork in Test := true,
   parallelExecution in Test := false,
   scalastyleConfig := baseDirectory.value / "project" / "scalastyle_config.xml",
-  (scalastyleConfig in Test) := baseDirectory.value / "project" / "scalastyle_config.xml"
+  (scalastyleConfig in Test) := baseDirectory.value / "project" / "scalastyle_config.xml",
+  resolvers ++= Seq(
+    "Collective Media Bintray" at "https://dl.bintray.com/collectivemedia/releases",
+    "JBoss Repository" at "http://repository.jboss.org/nexus/content/repositories/releases/",
+    "Cloudera Repository" at "https://repository.cloudera.com/artifactory/cloudera-repos/",
+    "Apache HBase" at "https://repository.apache.org/content/repositories/releases",
+    "Twitter Maven Repo" at "http://maven.twttr.com/",
+    "Spring Plugins" at "http://repo.spring.io/plugins-release",
+    "scala-tools" at "https://oss.sonatype.org/content/groups/scala-tools",
+    "sonatype-releases" at "https://oss.sonatype.org/content/repositories/releases/",
+    "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
+    "Second Typesafe repo" at "http://repo.typesafe.com/typesafe/maven-releases/",
+    "Mesosphere Public Repository" at "http://downloads.mesosphere.io/maven",
+    Resolver.sonatypeRepo("public")
+  )
+
 )
 
 lazy val compileScalastyle = taskKey[Unit]("compileScalastyle")
@@ -42,21 +57,6 @@ lazy val root = (project in file("."))
    .aggregate(core, nlp)
 
 pomIncludeRepository := { x => false }
-
-resolvers ++= Seq(
-  "Collective Media Bintray" at "https://dl.bintray.com/collectivemedia/releases",
-  "JBoss Repository" at "http://repository.jboss.org/nexus/content/repositories/releases/",
-  "Cloudera Repository" at "https://repository.cloudera.com/artifactory/cloudera-repos/",
-  "Apache HBase" at "https://repository.apache.org/content/repositories/releases",
-  "Twitter Maven Repo" at "http://maven.twttr.com/",
-  "Spring Plugins" at "http://repo.spring.io/plugins-release",
-  "scala-tools" at "https://oss.sonatype.org/content/groups/scala-tools",
-  "sonatype-releases" at "https://oss.sonatype.org/content/repositories/releases/",
-  "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-  "Second Typesafe repo" at "http://repo.typesafe.com/typesafe/maven-releases/",
-  "Mesosphere Public Repository" at "http://downloads.mesosphere.io/maven",
-  Resolver.sonatypeRepo("public")
-)
 
 publishMavenStyle := true
 
