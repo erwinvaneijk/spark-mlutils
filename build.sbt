@@ -1,9 +1,10 @@
 import Dependencies._
+import ReleaseTransformations._
 
 lazy val commonSettings = Seq(
   name := "sparkutils",
   organization := "nl.oakhill.spark",
-  version := "0.1.4-SNAPSHOT",
+  version := (version in ThisBuild).value,
   scalaVersion := "2.11.11",
   javaOptions ++= Seq("-Xms512M",
     "-Xmx2048M",
@@ -26,8 +27,48 @@ lazy val commonSettings = Seq(
     "Second Typesafe repo" at "http://repo.typesafe.com/typesafe/maven-releases/",
     "Mesosphere Public Repository" at "http://downloads.mesosphere.io/maven",
     Resolver.sonatypeRepo("public")
+  ),
+  pomIncludeRepository := { x => false },
+  publishMavenStyle := true,
+  useGpg := true,
+  // publish settings
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value)
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+  },
+  publishArtifact in Test := false,
+  licenses := Seq("Apache License 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
+  homepage := Some(url("https://github.com/erwinvaneijk/sparkutils")),
+    scmInfo := Some(
+      ScmInfo(
+        url("https://github.com/erwinvaneijk/sparkutils"),
+          "scm:git@github.com:erwinvaneijk/sparkutils.git"
+        )
+      ),
+    developers := List(
+      Developer(id="erwinvaneijk",
+        name="Erwin van Eijk",
+        email="235739+erwinvaneijk@users.noreply.github.com",
+        url=url("https://gibhub.com/erwinvaneijk"))
+          ),
+  releaseCrossBuild := true, // true if you cross-build the project for multiple Scala versions
+  releaseProcess := Seq[ReleaseStep](
+    checkSnapshotDependencies,
+    inquireVersions,
+    runClean,
+    runTest,
+    setReleaseVersion,
+    commitReleaseVersion,
+    tagRelease,
+    releaseStepCommand("publishSigned"),
+    setNextVersion,
+    commitNextVersion,
+    releaseStepCommand("sonatypeReleaseAll"),
+    pushChanges
   )
-
 )
 
 lazy val compileScalastyle = taskKey[Unit]("compileScalastyle")
@@ -56,56 +97,3 @@ lazy val root = (project in file("."))
    .settings(commonSettings)
    .aggregate(core, nlp)
 
-pomIncludeRepository := { x => false }
-
-publishMavenStyle := true
-
-useGpg := true
-
-// publish settings
-publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value)
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-}
-
-publishArtifact in Test := false
-
-licenses := Seq("Apache License 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"))
-
-homepage := Some(url("https://github.com/erwinvaneijk/sparkutils"))
-
-scmInfo := Some(
-  ScmInfo(
-    url("https://github.com/erwinvaneijk/sparkutils"),
-      "scm:git@github.com:erwinvaneijk/sparkutils.git"
-    )
-  )
-
-developers := List(
-  Developer(id="erwinvaneijk",
-            name="Erwin van Eijk",
-            email="erwin.vaneijk@gmail.com",
-            url=url("https://gibhub.com/erwinvaneijk"))
-)
-
-
-import ReleaseTransformations._
-
-releaseCrossBuild := true // true if you cross-build the project for multiple Scala versions
-releaseProcess := Seq[ReleaseStep](
-  checkSnapshotDependencies,
-  inquireVersions,
-  runClean,
-  runTest,
-  setReleaseVersion,
-  commitReleaseVersion,
-  tagRelease,
-  releaseStepCommand("publishSigned"),
-  setNextVersion,
-  commitNextVersion,
-  releaseStepCommand("sonatypeReleaseAll"),
-  pushChanges
-)
