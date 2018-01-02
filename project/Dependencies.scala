@@ -6,7 +6,7 @@ object Dependencies {
   lazy val sparkVersion = "2.2.0"
   lazy val scalaTestVersion = "3.0.0"
   lazy val scalaTimeVersion = "2.12.0"
-  lazy val apacheLoggingVersion = "2.9.0"
+  lazy val apacheLoggingVersion = "2.10.0"
   lazy val apacheLuceneVersion = "6.6.0"
   lazy val apacheHiveVersion = "2.3.0"
   lazy val pentahoVersion = "5.1.5-jhyde"
