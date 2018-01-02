@@ -14,3 +14,5 @@ addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.6")
 // To get everything in the repository
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.0")
 
+// Enable coverage analysis
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.1")

@@ -30,7 +30,7 @@ class WordCleaner(override val uid: String) extends UnaryTransformer[String, Str
 
   def this() = this(Identifiable.randomUID("wc"))
 
-  private def wholeWords = "[^\\w\\s]".r
+  private def wholeWords = "[^\\p{L}]".r
 
   private def noDigits = "[\\d]".r
 
@@ -39,7 +39,7 @@ class WordCleaner(override val uid: String) extends UnaryTransformer[String, Str
   def wordCleanerFunction(str: String): String = {
     val word = wholeWords.replaceAllIn(str, "")
     val noDigit = noDigits.replaceAllIn(word, "")
-    noDigit
+    noDigit.toLowerCase
   }
 
   override def copy(extra: ParamMap): WordCleaner = defaultCopy(extra)
