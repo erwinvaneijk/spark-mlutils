@@ -34,10 +34,12 @@ lazy val commonSettings = Seq(
   // publish settings
   publishTo := {
     val nexus = "https://oss.sonatype.org/"
-    if (isSnapshot.value)
+    if (isSnapshot.value) {
       Some("snapshots" at nexus + "content/repositories/snapshots")
-    else
-      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+    }
+    else {
+      Some("releases" at nexus + "service/local/staging/deploy/maven2")
+    }
   },
   publishArtifact in Test := false,
   licenses := Seq("Apache License 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
@@ -90,7 +92,7 @@ lazy val core = (project in file("core"))
 
 lazy val nlp = (project in file("nlp"))
   .settings(commonSettings,
-      libraryDependencies ++= luceneDependencies)
+      libraryDependencies ++= openNlpDependencies)
   .dependsOn(core % "compile->compile;test->test")
 
 lazy val root = (project in file("."))
