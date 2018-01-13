@@ -12,7 +12,6 @@ lazy val commonSettings = Seq(
     "-XX:+CMSClassUnloadingEnabled"),
   fork in Test := true,
   parallelExecution in Test := false,
-  ensimeScalaVersion in ThisBuild := scalaVersion.value,
   scalastyleConfig := baseDirectory.value / "project" / "scalastyle_config.xml",
   (scalastyleConfig in Test) := baseDirectory.value / "project" / "scalastyle_config.xml",
   resolvers ++= Seq(
