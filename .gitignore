@@ -53,3 +53,5 @@ flycheck_*.el
 /server/
 .projectile
 .dir-locals.el
+.ensime
+.ensime_cache/

@@ -1,6 +1,7 @@
 import sbt._
 
 object Dependencies {
+  lazy val betterFileVersion = "3.4.0"
   lazy val scalaLoggingVersion = "3.4.0"
   lazy val sparkTestingBaseVersion = "2.2.0_0.7.2"
   lazy val sparkVersion = "2.2.0"
@@ -12,6 +13,8 @@ object Dependencies {
   lazy val pentahoVersion = "5.1.5-jhyde"
   lazy val openNlpVersion = "1.8.4"
 
+  val betterFile =
+    "com.github.pathikrit" %% "better-files" % betterFileVersion
   val scalaLogging =
     ("com.typesafe.scala-logging" %% "scala-logging" % scalaLoggingVersion)
       .exclude("log4j", "log4j").exclude("org.slf4j", "slf4j-log4j12")
@@ -49,7 +52,7 @@ object Dependencies {
     "org.apache.lucene" % "lucene-analyzers-common" % apacheLuceneVersion
 
   val openNlp =
-    "org.apache.opennlp" % "opennlp" % openNlpVersion
+    "org.apache.opennlp" % "opennlp-tools" % openNlpVersion
 
   val testDependencies = Seq(
     scalaTic % Test,
@@ -82,5 +85,5 @@ object Dependencies {
   )
 
   val coreDependencies = sparkDependencies ++
-    loggingDependencies ++ testDependencies
+    loggingDependencies ++ testDependencies ++ Seq(betterFile)
 }
